@@ -9,7 +9,7 @@ const VERIFY_TOKEN = "my_secret_token"; // Same token used in Meta webhook setup
 app.use(bodyParser.json());
 
 const WHATSAPP_API_URL = "https://graph.facebook.com/v22.0/550374258168588/messages";
-const ACCESS_TOKEN = "EAAYeLz5WOyEBO5ZC5cYJDH5HVNXPmmF5ob8FQozeTJEJZBuOh7SZAjowR16ubf9hZBsJxooZCZCcjMoCtDn3ZC5qwcoSWlg6ZCGNr14WowrQCOZBmhZAxZAeTQGNr6iG9HFBTpgy2Opv593nzqfmqZBSdu3HPPkBe1VbmLxqn0ZBgyPyEZBMxlCQe6p7avzBLz4a8k9SlVNnrDwolmZA5Clr08BMCHbylUOMqQZD";
+const ACCESS_TOKEN = "EAAYeLz5WOyEBOZB3PV2VquDFfSUMhl3hhS5fLIvsQfJnBD39iAmOMUJLasjZBJsZBN0kf9kvvdbZA9si3ZBekz5ZAjhrdaxZC0ZBg9yL8Mfhl8VgZAx9tMbvS9Gv3UZCPiOdPJLQFHwaMm5UFLfOQdlr235euZCIeEfe20JNA9nZBnI61jTglbn4VZC6njz9mLMMr4JHv5pjw1Mme4mDSF39J0AKdNCKEhu0ZD";
 
 // POST /send-message
 app.post("/send-message", async (req, res) => {
@@ -41,7 +41,8 @@ app.post("/send-message", async (req, res) => {
       }
     );
 
-    res.status(200).json({ success: true, response: response.data });
+    res.status(200).json({ success: true, response: response });
+    console.log(response ,"message sending response");
   } catch (err) {
     console.error("Error sending WhatsApp message:", err.response?.data || err.message);
     res.status(500).json({ error: "Failed to send message", details: err.response?.data || err.message });
@@ -57,6 +58,7 @@ app.get("/webhook", (req, res) => {
   console.log(req.query,"query");
   if (mode && token === VERIFY_TOKEN) {
     console.log("✅ Webhook verified!");
+    // console.log();
     res.status(200).send(challenge);
   } else {
     res.sendStatus(403);
